@@ -2,5 +2,10 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background: #324057
+    background: #324057;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
 }

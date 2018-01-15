@@ -33,7 +33,7 @@ class Home extends React.Component {
 
         var loopViews = [
             {
-                title: '为中国的伟大复兴添砖加瓦',
+                title: '加快祖国建设步伐',
                 bgimg: 'http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1207/16/c0/12347822_1342409157907.jpg',
                 btns: [
                     {
@@ -90,7 +90,7 @@ class Home extends React.Component {
                                         borderRadius: '100%',
                                         height: '120%',
                                         width: '120%',
-                                        background:'#ffffff'
+                                        background: '#ffffff'
                                     }}>
                                         <div className="textCenter">
                                             <img src={item.icon} alt="icon"/>
