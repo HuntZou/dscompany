@@ -1,14 +1,13 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch, withRouter} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import AboutMe from './AboutMe';
-import Home from './Home2';
-import Transport from './Transport';
-import Lease from './Lease';
+import Home from './Home';
+import ServicePage from './component/ServicePage';
 import ContactMe from './ContactMe';
-import Wholesale from './Wholesale';
 import {Menu, Layout} from 'antd';
 import 'antd/dist/antd.css';
 import './css/home.css'
+import {services} from './datas/cfgDatas'
 
 class App extends React.Component {
     render() {
@@ -16,52 +15,55 @@ class App extends React.Component {
             <BrowserRouter style={{height: '100%'}}>
                 <Layout style={{height: '100%'}}>
                     <Layout.Header>
-                        <NavMenu/>
+                        <Menu
+                            theme="dark"
+                            mode="horizontal"
+                            defaultSelectedKeys={['index']}
+                            style={{lineHeight: '64px'}}>
+                            <Menu.Item key="index"><Link to='/index'>首页</Link></Menu.Item>
+                            <Menu.SubMenu title="服务内容">
+                                {
+                                    services.map((item, index) => {
+                                        return (
+                                            <Menu.Item key={index}>
+                                                <Link to={{pathname: item.pathname, state: item.items}}>
+                                                    {item.type}
+                                                </Link>
+                                            </Menu.Item>
+                                        )
+                                    })
+                                }
+                            </Menu.SubMenu>
+                            <Menu.Item key="aboutme"><Link to='/aboutme'>关于我们</Link></Menu.Item>
+                            <Menu.Item key="contactme"><Link to='/contactme'>联系我们</Link></Menu.Item>
+                        </Menu>
                     </Layout.Header>
-                    <Layout.Content style={{height: '80%'}}>
+                    <Layout.Content>
                         <Switch>
                             <Route path="/" exact component={Home}/>
                             <Route path="/index" exact component={Home}/>
                             <Route path="/aboutme" component={AboutMe}/>
-                            <Route path="/wholesale" component={Wholesale}/>
-                            <Route path="/transport" component={Transport}/>
-                            <Route path="/lease" component={Lease}/>
                             <Route path="/contactme" component={ContactMe}/>
+                            {
+                                services.map((item, index) => {
+                                    return (
+                                        <Route key={index} path={item.pathname} component={ServicePage}/>
+                                    )
+                                })
+                            }
                         </Switch>
                     </Layout.Content>
+                    <Layout.Footer style={{padding: '0'}}>
+                        <div style={{fontSize: '12px', textAlign: 'center'}}>
+                            <span>© 2018-01-16武汉笃胜运输有限公司 版权所有</span>
+                            <a style={{marginLeft: '10px'}} href="http://www.miitbeian.gov.cn/">鄂ICP备17021929号</a>
+                        </div>
+                    </Layout.Footer>
                 </Layout>
             </BrowserRouter>
         );
     }
 
-    jumpPage(index) {
-        this.props.history.push(index);
-    }
-
-}
-
-const NavMenu = withRouter(({history}) => {
-    return (
-        <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={['index']}
-            style={{lineHeight: '64px'}}
-            onSelect={(item, key, selectedKeys) => jump(history, item.key)}>
-            <Menu.Item key="index">首页</Menu.Item>
-            <Menu.SubMenu title="服务内容">
-                <Menu.Item key="wholesale">建材购买</Menu.Item>
-                <Menu.Item key="transport">货物运输</Menu.Item>
-                <Menu.Item key="lease">设备租赁</Menu.Item>
-            </Menu.SubMenu>
-            <Menu.Item key="aboutme">关于我们</Menu.Item>
-            <Menu.Item key="contactme">联系我们</Menu.Item>
-        </Menu>
-    )
-});
-
-function jump(history, key) {
-    history.push(key);
 }
 
 export default App;

@@ -1,113 +1,69 @@
 /**
- * Created by Jhinwins on 2018/1/11.
+ * Created by Jhinwins on 2018/1/15.
  */
+import {Carousel, Button, Layout, Row, Col} from 'antd';
 import React from 'react';
-import {Layout, Carousel} from 'element-react';
-import 'element-theme-default';
-import {withRouter} from 'react-router-dom'
-import './css/public.css'
-import LoopView from './component/LoopView';
+import {Link} from 'react-router-dom';
+import {carouselItems, mainService} from './datas/cfgDatas'
 
-class Home extends React.Component {
-
+export default class Home extends React.Component {
     render() {
-
-        var services = [
-            {
-                icon: 'https://png.icons8.com/cotton/60/000000/brick-wall.png',
-                title: '建材'
-            },
-            {
-                icon: 'https://png.icons8.com/cotton/60/000000/delivery.png',
-                title: '运输'
-            },
-            {
-                icon: 'https://png.icons8.com/color/60/000000/key-exchange.png',
-                title: '租赁'
-            },
-            {
-                icon: 'https://png.icons8.com/nolan/60/000000/technical-support.png',
-                title: '咨询'
-            },
-        ];
-
-        var loopViews = [
-            {
-                title: '加快祖国建设步伐',
-                bgimg: 'http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1207/16/c0/12347822_1342409157907.jpg',
-                btns: [
-                    {
-                        btnTitle: '联系我们',
-                        btnLink: ''
-                    }
-                ]
-            },
-            {
-                title: '为中国的伟大复兴添砖加瓦',
-                bgimg: 'http://www.wallcoo.com/nature/Apple_OS_X_Mountain_Lion_Wallpapers/wallpapers/1366x768/Earth%20and%20Moon.jpg',
-                btns: [
-                    {
-                        btnTitle: '联系我们',
-                        btnLink: ''
-                    }
-                ]
-            }
-        ];
-
         return (
             <div>
-                <Layout.Row>
-                    <Layout.Col span="24">
-
-                        <Carousel indicatorPosition="inside" height="360px">
-                            {
-                                loopViews.map((item, index) => {
-                                    return (
-                                        <Carousel.Item key={index}>
-                                            <LoopView title={item.title} btns={item.btns} bgimg={item.bgimg}/>
-                                        </Carousel.Item>
-                                    )
-                                })
-                            }
-                        </Carousel>
-                    </Layout.Col>
-                </Layout.Row>
-
-                <Layout.Row>
-                    <Layout.Col span="24">
-                        <div className="textCenter">
-                            <h1 style={{color: '#F9FAFC'}}>您是否需要</h1>
-                        </div>
-                    </Layout.Col>
-                </Layout.Row>
-
-                <Layout.Row type="flex" justify="space-around">
+                <Carousel autoplay>
                     {
-                        services.map((item, index) => {
+                        carouselItems.map((item, index) => {
                             return (
-                                <Layout.Col span="2" key={index}>
-                                    <div style={{
-                                        borderRadius: '100%',
-                                        height: '120%',
-                                        width: '120%',
-                                        background: '#ffffff'
-                                    }}>
-                                        <div className="textCenter">
-                                            <img src={item.icon} alt="icon"/>
-                                        </div>
-
-                                        <div className="textCenter">
-                                            <span>{item.title}</span>
-                                        </div>
-                                    </div>
-                                </Layout.Col>
-                            );
+                                <div key={index} style={{
+                                    backgroundImage: 'url(' + item.bgimg + ')',
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: 'cover',
+                                    textAlign: 'center',
+                                }}>
+                                    <Layout style={{height: '450px', background: '#00000000'}}>
+                                        <Layout.Header style={{background: '#00000000'}}></Layout.Header>
+                                        <Layout.Content>
+                                            <div><h1 style={{color: 'white'}}>{item.title}</h1></div>
+                                            <div>
+                                                {
+                                                    item.btns.map((btnItem, btnIndex) => {
+                                                        return (
+                                                            <Button type="primary"
+                                                                    key={btnIndex}
+                                                                    onClick={() => this.props.history.push(btnItem.link)}>{btnItem.title}
+                                                            </Button>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                        </Layout.Content>
+                                    </Layout>
+                                </div>
+                            )
                         })
                     }
-                </Layout.Row>
+                </Carousel>
+                <div>
+                    <Row type="flex" justify="space-around" align="center">
+                        {
+                            mainService.map((item, index) => {
+                                return (
+                                    <Col key={index}>
+                                        <div style={{textAlign: 'center'}}>
+                                            <Link to={{pathname: item.link}}>
+                                                <img src={item.pic}
+                                                     alt="ICON"
+                                                     style={{height: '50px', width: '50px'}}/>
+                                                <h4>{item.title}</h4>
+                                            </Link>
+                                        </div>
+                                    </Col>
+                                )
+                            })
+                        }
+                    </Row>
+                </div>
             </div>
-        );
+        )
     }
 }
-
-export default withRouter(Home);
