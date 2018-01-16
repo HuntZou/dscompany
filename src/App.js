@@ -6,7 +6,6 @@ import ServicePage from './component/ServicePage';
 import ContactMe from './ContactMe';
 import {Menu, Layout} from 'antd';
 import 'antd/dist/antd.css';
-import './css/home.css'
 import {services} from './datas/cfgDatas'
 
 class App extends React.Component {
@@ -15,6 +14,16 @@ class App extends React.Component {
             <BrowserRouter style={{height: '100%'}}>
                 <Layout style={{height: '100%'}}>
                     <Layout.Header>
+                        <div style={{
+                            width: '220px',
+                            height: '31px',
+                            background: '#000000',
+                            marginRight:'30px',
+                            float: 'left',
+                            color: 'white',
+                            fontSize:'16px'
+                        }}>武汉笃胜运输有限公司
+                        </div>
                         <Menu
                             theme="dark"
                             mode="horizontal"
